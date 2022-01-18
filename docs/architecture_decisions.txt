@@ -1,0 +1,14 @@
+The technologies selected are 
+1. REST
+2. gRPC
+3. Message queues ( Kafka)
+
+REST is used to handle low traffic endpoints. REST is also selected for endpoints, where development and maintenance has
+preference over performance. 
+
+In the project, person service is implemented using REST. And the location service is moved to gRPC.
+
+gRPC is selected for services that has high intencity user activity. Location service is re-implemented using gRPC.
+
+Kafka is used as a message queue for communication between the services. Here the location service acts as a message producers.
+The produced messages are consumed by the location consumer servie, which store it to Postgres database.
