@@ -1,0 +1,72 @@
+swagger: "2.0"
+info:
+  description: "This is a service to connect person who attend the same location for events and conferences"
+  title: "UdaConnect"
+  version: 1.0.0
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "admin@udaconnect.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/"
+schemes:
+  - "http"
+paths:
+  /api/persons:
+    get:
+      summary: List all persons
+      operationId: get_persons_resource
+      tags:
+        - UdaConnect
+      responses:
+        "200":
+          description: List of persons
+    post:
+      summary: Create a person
+      operationId: post_persons_resource
+      tags:
+        - UdaConnect
+      responses:
+        "200":
+          description: Success
+  /api/persons/{person_id}:
+    get:
+      operationId: get_person_resource
+      tags:
+        - UdaConnect
+      parameters:
+        - in: path
+          description: Unique ID for a given Person
+          name: person_id
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+  /api/persons/{person_id}/connection:
+    get:
+      operationId: get_connection_data_resource
+      tags:
+        - UdaConnect
+      parameters:
+        - in: query
+          description: Proximity to a given user in meters
+          name: distance
+          type: string
+        - in: query
+          description: Upper bound of date range
+          name: end_date
+          type: string
+        - in: query
+          description: Lower bound of date range
+          name: start_date
+          type: string
+        - name: person_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success

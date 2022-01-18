@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  TOPIC_NAME: "person-location"
+  KAFKA_HOST_CONSUMER: "kafka.default.svc.cluster.local"
+  KAFKA_HOST_PRODUCER: "kafka-0.kafka-headless.default.svc.cluster.local"
+  KAFKA_PORT: "9092"
+metadata:
+  name: kafka-env

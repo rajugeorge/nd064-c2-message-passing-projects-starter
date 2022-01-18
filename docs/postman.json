@@ -1,0 +1,68 @@
+{
+  "info": {
+    "_postman_id": "73f3a7f8-f247-488b-bd50-96b8dce3cfe2",
+    "name": "Udaconnect-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Persons",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:30001/api/persons",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "30001",
+          "path": ["api", "persons"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Person By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:30001/api/persons/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "30001",
+          "path": ["api", "persons", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Person Connections",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:30001/api/persons/5/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "30001",
+          "path": ["api", "persons", "5", "connection"],
+          "query": [
+            {
+              "key": "start_date",
+              "value": "2020-01-01"
+            },
+            {
+              "key": "end_date",
+              "value": "2020-12-30"
+            },
+            {
+              "key": "distance",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

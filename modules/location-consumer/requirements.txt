@@ -1,0 +1,4 @@
+kafka-python==2.0.2
+SQLAlchemy==1.4.29
+psycopg2
+GeoAlchemy2==0.10.0
