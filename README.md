@@ -104,6 +104,8 @@ b. Add this value to the key 'KAFKA_HOST_PRODUCER' in deployment/kafka-configmap
 5. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
 6. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
 7. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+8. `kubectl apply -f deployment/location-producer.yaml` - Set up the producer for location service.
+9. `kubectl apply -f deployment/location-consumer.yaml` - Set up the consumer for location service.
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
@@ -111,14 +113,31 @@ Note: The first time you run this project, you will need to seed the database wi
 
 ### Verifying it Works
 
-Once the project is up and running, you should be able to see 3 deployments and 3 services in Kubernetes:
-`kubectl get pods` and `kubectl get services` - should both return `udaconnect-app`, `udaconnect-api`, and `postgres`
+Once the project is up and running, you should be able to see 5 deployments and 6 services in Kubernetes:
+`kubectl get pods` and `kubectl get services` - should both return `udaconnect-app`, `udaconnect-api`, `postgres`, `location-grpc` and `location-consumser`
 
 These pages should also load on your web browser:
 
 - `http://localhost:30001/` - OpenAPI Documentation
 - `http://localhost:30001/api/` - Base path for API
 - `http://localhost:30000/` - Frontend ReactJS Application
+
+To test the location service, do the following.
+
+1. Enable kafka console consumer.
+
+```
+kubectl --namespace default exec -it kafka-0 -- kafka-console-consumer.sh --bootstrap-server kafka.default.svc.cluster.local:9092 --topic person-location --consumer.config /opt/bitnami/kafka/config/consumer.properties
+
+```
+
+2. Get the pod name of location producer (pod starting with location-grpc-....)
+3. Get into the command line of the location producer pod `kubectl exec -it <POD_NAME> -- /bin/sh`
+   eg:- `kubectl exec -it location-grpc-84b497845-fzcwp -- /bin/sh`
+4. Execute writer.py file : Run `python writer.py`
+5. You should see the output at the kafka consumer console.
+   sample output : `{"person_id": 1, "longitude": -122.29088592529297, "latitude": 37.55363082885742}`
+6. You can also see the entry in the postgres database.
 
 #### Deployment Note
 
