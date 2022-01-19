@@ -45,28 +45,3 @@ paths:
       responses:
         "200":
           description: Success
-  /api/persons/{person_id}/connection:
-    get:
-      operationId: get_connection_data_resource
-      tags:
-        - UdaConnect
-      parameters:
-        - in: query
-          description: Proximity to a given user in meters
-          name: distance
-          type: string
-        - in: query
-          description: Upper bound of date range
-          name: end_date
-          type: string
-        - in: query
-          description: Lower bound of date range
-          name: start_date
-          type: string
-        - name: person_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
