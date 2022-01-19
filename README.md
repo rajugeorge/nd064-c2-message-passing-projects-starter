@@ -51,10 +51,21 @@ we use Helm to setup kafka. Please follow the below instructions
 
 1. `helm repo add bitnami https://charts.bitnami.com/bitnami`
 2. `helm repo update`
-3. `helm install zookeeper bitnami/zookeeper \ --set replicaCount=1 \ --set auth.enabled=false \ --set allowAnonymousLogin=true`
+3. ```
+   helm install zookeeper bitnami/zookeeper \
+     --set replicaCount=1 \
+     --set auth.enabled=false \
+     --set allowAnonymousLogin=true
+   ```
 
 ```
-Get the zookeeper DNS entry and add to kafka config
+Get the zookeeper DNS name and add to kafka config.
+
+a. Get the zookeeper DNS name from below output. (Sample output).
+ZooKeeper can be accessed via port 2181 on the following DNS name from within your cluster:
+
+    zookeeper.default.svc.cluster.local
+b. Add this value to the key 'KAFKA_HOST_CONSUMER' in deployment/kafka-configmap.yaml
 ```
 
 4. `helm install kafka bitnami/kafka \ --set zookeeper.enabled=false \ --set replicaCount=1 \ --set externalZookeeper.servers=zookeeper.default.svc.cluster.local`
@@ -163,3 +174,7 @@ Your architecture diagram should focus on the services and how they talk to one 
 
 - We can access a running Docker container using `kubectl exec -it <pod_id> sh`. From there, we can `curl` an endpoint to debug network issues.
 - The starter project uses Python Flask. Flask doesn't work well with `asyncio` out-of-the-box. Consider using `multiprocessing` to create threads for asynchronous behavior in a standard Flask application.
+
+```
+
+```
