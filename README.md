@@ -49,8 +49,8 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 
 we use helm to setup kafka.
 
-1. helm repo add bitnami https://charts.bitnami.com/bitnami
-2. helm repo update
+1. `helm repo add bitnami https://charts.bitnami.com/bitnami`
+2. `helm repo update`
 3.
 
 ### Steps
