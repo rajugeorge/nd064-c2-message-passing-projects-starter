@@ -47,20 +47,34 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 
 ### Setting up kafka using helm
 
-we use helm to setup kafka.
+we use Helm to setup kafka. Please follow the below instructions
 
 1. `helm repo add bitnami https://charts.bitnami.com/bitnami`
 2. `helm repo update`
-3.
+3. `helm install zookeeper bitnami/zookeeper \ --set replicaCount=1 \ --set auth.enabled=false \ --set allowAnonymousLogin=true`
+
+```
+Get the zookeeper DNS entry and add to kafka config
+```
+
+4. `helm install kafka bitnami/kafka \ --set zookeeper.enabled=false \ --set replicaCount=1 \ --set externalZookeeper.servers=zookeeper.default.svc.cluster.local`
+
+```
+Get the kafka DNS entry and add to kafka config
+```
+
+5. Get Kafka pod name using: `kubectl get pods --namespace default -l "app.kubernetes.io/name=kafka,app.kubernetes.io/instance=kafka,app.kubernetes.io/component=kafka" -o jsonpath="{.items[0].metadata.name}"`
+6. Create topic (person-location): `kubectl --namespace default exec -it kafka-0 -- kafka-topics.sh --create --zookeeper zookeeper.default.svc.cluster.local:2181 --replication-factor 1 --partitions 1 --topic person-location` . Instead of 'kafka-0' use the pod name received from step 5. Instead of 'zookeeper.default.svc.cluster.local' use the url got from step 3
 
 ### Steps
 
 1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
 2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
-3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
-4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
-5. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-6. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+3. `kubectl apply -f deployment/kafka-config.yaml` - Set up kafka environment variables for the pods
+4. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
+5. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
+6. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+7. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
