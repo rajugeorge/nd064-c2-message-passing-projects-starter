@@ -62,16 +62,34 @@ we use Helm to setup kafka. Please follow the below instructions
 Get the zookeeper DNS name and add to kafka config.
 
 a. Get the zookeeper DNS name from below output. (Sample output).
+
 ZooKeeper can be accessed via port 2181 on the following DNS name from within your cluster:
 
     zookeeper.default.svc.cluster.local
+
 b. Add this value to the key 'KAFKA_HOST_CONSUMER' in deployment/kafka-configmap.yaml
-```
-
-4. `helm install kafka bitnami/kafka \ --set zookeeper.enabled=false \ --set replicaCount=1 \ --set externalZookeeper.servers=zookeeper.default.svc.cluster.local`
 
 ```
-Get the kafka DNS entry and add to kafka config
+
+4. ```
+   helm install kafka bitnami/kafka \
+     --set zookeeper.enabled=false \
+     --set replicaCount=1 \
+     --set externalZookeeper.servers=zookeeper.default.svc.cluster.local
+   ```
+
+```
+
+Get the kafka DNS name and add to kafka config.
+
+a. Get the internal kafka DNS name from below output. (Sample output).
+
+Each Kafka broker can be accessed by producers via port 9092 on the following DNS name(s) from within your cluster:
+
+    kafka-0.kafka-headless.default.svc.cluster.local:9092
+
+b. Add this value to the key 'KAFKA_HOST_PRODUCER' in deployment/kafka-configmap.yaml
+
 ```
 
 5. Get Kafka pod name using: `kubectl get pods --namespace default -l "app.kubernetes.io/name=kafka,app.kubernetes.io/instance=kafka,app.kubernetes.io/component=kafka" -o jsonpath="{.items[0].metadata.name}"`
