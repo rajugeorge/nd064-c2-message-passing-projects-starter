@@ -44,7 +44,7 @@
           "raw": "http://localhost:30002/api/persons/5/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "30001",
+          "port": "30002",
           "path": ["api", "persons", "5", "connection"],
           "query": [
             {
