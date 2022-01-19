@@ -35,12 +35,12 @@ def persist_message(location):
     session.add(location)
     session.commit()
 
-
-for message in consumer:
-    location = {'person_id':message[6]['person_id'], 'latitude': message[6]['latitude'], 'longitude': message[6]['longitude'] }
-    persist_message(location)
-    logging.debug(location)
-    print(location)
-    print (message.value)
+while True:
+    for message in consumer:
+        location = {'person_id':message[6]['person_id'], 'latitude': message[6]['latitude'], 'longitude': message[6]['longitude'] }
+        persist_message(location)
+        logging.debug(location)
+        print(location)
+        print (message.value)
 
 
