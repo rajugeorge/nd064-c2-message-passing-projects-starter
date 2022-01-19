@@ -8,7 +8,7 @@ preference over performance.
 
 In the project, person service is implemented using REST. And the location service is moved to gRPC.
 
-gRPC is selected for services that has high intencity user activity. Location service is re-implemented using gRPC.
+gRPC is selected for services that has high intensity user activity. Location service is re-implemented using gRPC.
 
-Kafka is used as a message queue for communication between the services. Here the location service acts as a message producers.
-The produced messages are consumed by the location consumer servie, which store it to Postgres database.
+Kafka is used as a message queue for communication between the services. Here the location service acts as a message producer.
+The produced messages are consumed by the location consumer service, which stores it to Postgres database.

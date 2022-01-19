@@ -1,4 +1,4 @@
-grpc endpoint is tested using a sample python file.
+gRPC endpoint is tested using a sample python file.
 This file communicates with the gRPC server and sends a sample payload. 
 
 Steps to send a sample request. 
@@ -11,3 +11,4 @@ And all services are running.
 2. Get to the command of the pod
     a. kubectl exec -it <POD_NAME> -- /bin/sh
 3. Run : python writer.py
+4. You should see the message in the kafka consumer console or you can check the postgres db for a new entry.
