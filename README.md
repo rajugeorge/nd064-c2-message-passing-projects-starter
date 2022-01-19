@@ -99,7 +99,7 @@ b. Add this value to the key 'KAFKA_HOST_PRODUCER' in deployment/kafka-configmap
 
 1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
 2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
-3. `kubectl apply -f deployment/kafka-config.yaml` - Set up kafka environment variables for the pods
+3. `kubectl apply -f deployment/kafka-configmap.yaml` - Set up kafka environment variables for the pods
 4. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
 5. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
 6. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
